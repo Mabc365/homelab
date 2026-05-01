@@ -1,0 +1,5 @@
+---
+- name: Restart Twingate Connector
+  systemd:
+    name: twingate-connector
+    state: restarted

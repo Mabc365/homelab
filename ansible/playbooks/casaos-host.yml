@@ -6,6 +6,7 @@
     - ssh
     - docker
     - tailscale
+    - twingate
     - casaos
     - portainer
     - nextcloud

@@ -6,6 +6,7 @@
     - ssh
     - docker
     - tailscale
+    - twingate
     - ollama
     - openwebui
     - n8n

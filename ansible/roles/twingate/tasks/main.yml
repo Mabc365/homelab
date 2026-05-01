@@ -1,0 +1,44 @@
+---
+- name: Add Twingate GPG key
+  apt_key:
+    url: https://packages.twingate.com/apt/gpg.key
+    state: present
+
+- name: Add Twingate repository
+  apt_repository:
+    repo: "deb https://packages.twingate.com/apt/ /"
+    state: present
+    filename: twingate
+
+- name: Install Twingate Connector
+  apt:
+    name: twingate-connector
+    state: present
+    update_cache: yes
+
+- name: Configure Twingate Connector
+  copy:
+    dest: /etc/twingate/connector.conf
+    owner: root
+    group: root
+    mode: "0600"
+    content: |
+      TWINGATE_NETWORK={{ twingate_network }}
+      TWINGATE_ACCESS_TOKEN={{ twingate_access_token }}
+      TWINGATE_REFRESH_TOKEN={{ twingate_refresh_token }}
+      TWINGATE_LABEL_HOSTNAME={{ twingate_label_hostname | default(ansible_hostname) }}
+  when:
+    - twingate_network is defined and twingate_network != ""
+    - twingate_access_token is defined and twingate_access_token != ""
+    - twingate_refresh_token is defined and twingate_refresh_token != ""
+  notify: Restart Twingate Connector
+
+- name: Enable and start Twingate Connector
+  systemd:
+    name: twingate-connector
+    enabled: yes
+    state: started
+  when:
+    - twingate_network is defined and twingate_network != ""
+    - twingate_access_token is defined and twingate_access_token != ""
+    - twingate_refresh_token is defined and twingate_refresh_token != ""
