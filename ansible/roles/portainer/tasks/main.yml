@@ -1,0 +1,20 @@
+---
+- name: Create portainer compose directory
+  file:
+    path: "/opt/homelab/compose/portainer"
+    state: directory
+
+- name: Copy portainer docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "/opt/homelab/compose/portainer/docker-compose.yml"
+
+- name: Copy portainer .env file
+  template:
+    src: .env.j2
+    dest: "/opt/homelab/compose/portainer/.env"
+
+- name: Start portainer service
+  community.docker.docker_compose:
+    project_src: "/opt/homelab/compose/portainer"
+    state: present

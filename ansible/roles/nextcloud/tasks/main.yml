@@ -1,0 +1,21 @@
+---
+- name: Create nextcloud compose directory
+  file:
+    path: "/opt/homelab/compose/nextcloud"
+    state: directory
+
+- name: Copy nextcloud docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "/opt/homelab/compose/nextcloud/docker-compose.yml"
+
+- name: Copy nextcloud .env file
+  template:
+    src: .env.j2
+    dest: "/opt/homelab/compose/nextcloud/.env"
+    mode: "0600"
+
+- name: Start nextcloud service
+  community.docker.docker_compose:
+    project_src: "/opt/homelab/compose/nextcloud"
+    state: present

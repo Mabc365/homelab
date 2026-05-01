@@ -1,0 +1,21 @@
+---
+- name: Create davinci-project-server compose directory
+  file:
+    path: "/opt/homelab/compose/davinci-project-server"
+    state: directory
+
+- name: Copy davinci-project-server docker-compose.yml
+  template:
+    src: docker-compose.yml.j2
+    dest: "/opt/homelab/compose/davinci-project-server/docker-compose.yml"
+
+- name: Copy davinci-project-server .env file
+  template:
+    src: .env.j2
+    dest: "/opt/homelab/compose/davinci-project-server/.env"
+    mode: "0600"
+
+- name: Start davinci-project-server service
+  community.docker.docker_compose:
+    project_src: "/opt/homelab/compose/davinci-project-server"
+    state: present

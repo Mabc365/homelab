@@ -1,0 +1,35 @@
+#cloud-config
+#
+# Homelab Base: cloud-init user-data
+#
+# This cloud-init configuration performs the initial server provisioning.
+# It creates a user, adds an SSH key, installs necessary packages,
+# and then triggers an Ansible run to complete the setup.
+#
+# How to use:
+# 1. Replace 'mabc365' with your desired username.
+# 2. Replace the SSH public key if you want to use a different key.
+# 3. Replace 'https://github.com/Mabc365/homelab.git' with your repo URL.
+# 4. Provide this file as user-data to your cloud instance.
+
+# Create a user and set up SSH access
+users:
+  - name: mabc365
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    groups: sudo
+    shell: /bin/bash
+    ssh_authorized_keys:
+      - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAP54bGKs4akm1/XcA4n7RJ1CZRgRY/7yIRoM/da/qbe Mabc365@homelab
+
+# Update packages and install Ansible
+package_update: true
+package_upgrade: true
+packages:
+  - git
+  - curl
+  - ansible
+
+# Run the bootstrap script from the cloned repository
+runcmd:
+  - [ sh, -c, "git clone https://github.com/Mabc365/homelab.git /opt/homelab" ]
+  - [ sh, -c, "cd /opt/homelab && ./bootstrap/first-boot.sh" ]

@@ -1,0 +1,23 @@
+version: '3.8'
+
+# DaVinci Resolve shared project database.
+# Resolve ships PostgreSQL 13 in its official Project Server installer; this
+# stack mirrors that so Resolve clients can connect on TCP 5432 with the
+# `postgres` user and create their project databases via the Project Manager UI.
+
+services:
+  postgres:
+    image: postgres:13
+    container_name: davinci_project_server
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: postgres
+      POSTGRES_INITDB_ARGS: "--encoding=UTF8 --locale=C"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

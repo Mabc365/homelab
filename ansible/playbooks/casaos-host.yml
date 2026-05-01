@@ -1,0 +1,12 @@
+---
+- name: Configure CasaOS host
+  hosts: all
+  roles:
+    - common
+    - ssh
+    - docker
+    - tailscale
+    - casaos
+    - portainer
+    - nextcloud
+    - davinci_project_server

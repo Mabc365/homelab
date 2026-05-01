@@ -1,0 +1,11 @@
+---
+# Variables for all hosts
+
+# User to create on the servers
+ansible_user: mabc365
+
+# Path to your public SSH key
+ssh_public_key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAP54bGKs4akm1/XcA4n7RJ1CZRgRY/7yIRoM/da/qbe Mabc365@homelab"
+
+# Domain for reverse proxy
+domain_name: homelab.local

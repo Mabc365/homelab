@@ -1,0 +1,20 @@
+---
+# Variables for CasaOS hosts
+
+casaos_install_script_url: "https://get.casaos.io"
+
+# Portainer
+portainer_http_port: 9000
+portainer_https_port: 9443
+
+# Nextcloud — override these via vault or a private group_vars file
+nextcloud_port: 8080
+nextcloud_admin_user: admin
+nextcloud_admin_password: changeme-admin
+nextcloud_mysql_root_password: changeme-root
+nextcloud_mysql_password: changeme-nextcloud
+nextcloud_trusted_domains: localhost
+
+# DaVinci Resolve project server (PostgreSQL 13)
+davinci_postgres_port: 5432
+davinci_postgres_password: changeme-davinci

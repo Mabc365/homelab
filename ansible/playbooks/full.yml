@@ -1,0 +1,17 @@
+---
+- name: Configure a full lab server
+  hosts: all
+  roles:
+    - common
+    - ssh
+    - docker
+    - tailscale
+    - ollama
+    - openwebui
+    - n8n
+    - casaos
+    - portainer
+    - nextcloud
+    - davinci_project_server
+    - storage
+    - reverse_proxy
